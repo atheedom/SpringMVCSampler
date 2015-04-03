@@ -12,16 +12,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.stereotype.Service;
 
-@Service("Service for users management")
 public class UserService implements UserDetailsService {
 	
 	@Autowired
 	private AccountRepository accountRepository;
-	
-	@PostConstruct	
+
+	@PostConstruct
 	protected void initialize() {
-		accountRepository.save(new Account("user", "demo", "ROLE_USER"));
-		accountRepository.save(new Account("admin", "admin", "ROLE_ADMIN"));
+            accountRepository.save(new Account("user", "demo", "ROLE_USER"));
+            accountRepository.save(new Account("admin", "admin", "ROLE_ADMIN"));
 	}
 	
 	@Override
