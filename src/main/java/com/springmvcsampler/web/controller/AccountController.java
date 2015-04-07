@@ -1,8 +1,9 @@
-package com.springmvcsampler.account;
+package com.springmvcsampler.web.controller;
 
 import java.security.Principal;
 
-import com.springmvcsampler.repositories.AccountRepository;
+import com.springmvcsampler.model.Account;
+import com.springmvcsampler.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;

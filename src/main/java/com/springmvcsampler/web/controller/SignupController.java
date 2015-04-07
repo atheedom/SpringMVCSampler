@@ -1,26 +1,32 @@
-package com.springmvcsampler.signup;
+package com.springmvcsampler.web.controller;
 
-import javax.validation.Valid;
-
-import com.springmvcsampler.repositories.AccountRepository;
+import com.springmvcsampler.model.Account;
+import com.springmvcsampler.service.AccountService;
+import com.springmvcsampler.service.UserService;
+import com.springmvcsampler.web.form.SignupForm;
+import com.springmvcsampler.web.support.web.MessageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.springmvcsampler.account.*;
-import com.springmvcsampler.support.web.*;
+import javax.validation.Valid;
 
 @Controller
-public class SignupController implements BasicController  {
+public class SignupController    {
 
     private static final String SIGNUP_VIEW_NAME = "signup/signup";
 	
 	@Autowired
 	private AccountService accountService;
-	
+
+	@Autowired
+	private UserService userService;
+
 	@RequestMapping(value = "signup")
 	public String signup(Model model) {
 		model.addAttribute(new SignupForm());
@@ -33,7 +39,7 @@ public class SignupController implements BasicController  {
 			return SIGNUP_VIEW_NAME;
 		}
 		Account account = accountService.save(signupForm.createAccount());
-		accountService.signin(account);
+		userService.signin(account);
         // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
         MessageHelper.addSuccessAttribute(ra, "signup.success");
 		return "redirect:/";

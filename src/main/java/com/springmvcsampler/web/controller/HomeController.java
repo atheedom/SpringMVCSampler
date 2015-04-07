@@ -1,4 +1,4 @@
-package com.springmvcsampler.home;
+package com.springmvcsampler.web.controller;
 
 import java.security.Principal;
 

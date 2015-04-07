@@ -1,4 +1,4 @@
-package com.springmvcsampler.error;
+package com.springmvcsampler.web.controller;
 
 import java.text.MessageFormat;
 

@@ -1,4 +1,4 @@
-package com.springmvcsampler.signin;
+package com.springmvcsampler.web.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

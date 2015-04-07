@@ -1,5 +1,6 @@
 package com.springmvcsampler.account;
 
+import com.springmvcsampler.config.WebSecurityConfigurationAware;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.security.core.context.SecurityContext;
@@ -13,11 +14,10 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 
-import com.springmvcsampler.config.WebSecurityConfigurationAware;
-
 public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationAware {
 
     private static String SEC_CONTEXT_ATTR = HttpSessionSecurityContextRepository.SPRING_SECURITY_CONTEXT_KEY;
+
 
     @Test
     public void requiresAuthentication() throws Exception {
@@ -26,6 +26,7 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
     }
 
     @Test
+    //@Ignore
     public void userAuthenticates() throws Exception {
         final String username = "user";
         ResultMatcher matcher = new ResultMatcher() {
@@ -35,12 +36,15 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
                 Assert.assertEquals(securityContext.getAuthentication().getName(), username);
             }
         };
+
+
         mockMvc.perform(post("/authenticate").param("username", username).param("password", "demo"))
                 .andExpect(redirectedUrl("/"))
                 .andExpect(matcher);
     }
 
     @Test
+    //@Ignore
     public void userAuthenticationFails() throws Exception {
         final String username = "user";
         mockMvc.perform(post("/authenticate").param("username", username).param("password", "invalid"))

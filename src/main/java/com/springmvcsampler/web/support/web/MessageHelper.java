@@ -1,6 +1,6 @@
-package com.springmvcsampler.support.web;
+package com.springmvcsampler.web.support.web;
 
-import static com.springmvcsampler.support.web.Message.MESSAGE_ATTRIBUTE;
+import static com.springmvcsampler.web.support.web.Message.MESSAGE_ATTRIBUTE;
 
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;

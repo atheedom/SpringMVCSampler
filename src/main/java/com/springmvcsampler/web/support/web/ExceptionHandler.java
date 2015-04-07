@@ -1,4 +1,4 @@
-package com.springmvcsampler.error;
+package com.springmvcsampler.web.support.web;
 
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.context.request.WebRequest;

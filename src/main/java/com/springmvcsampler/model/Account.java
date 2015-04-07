@@ -1,19 +1,13 @@
-package com.springmvcsampler.account;
-
-import javax.persistence.*;
+package com.springmvcsampler.model;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.domain.Auditable;
-import org.springframework.data.jpa.domain.AbstractAuditable;
 
-import java.util.Date;
-import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Index;
+import javax.persistence.Table;
 
 @Entity
 @Table(name = "Accounts",
@@ -23,15 +17,7 @@ import java.util.UUID;
 )
 @DynamicInsert
 @DynamicUpdate
-public class Account //extends AbstractAuditable<Account, UUID>
-{
-
-    @Id
-    @Column(nullable = false, unique = true)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
-    private UUID id;
+public class Account extends BaseEntity<Account> {
 
     @Column(unique = true)
     private String email;
@@ -39,9 +25,12 @@ public class Account //extends AbstractAuditable<Account, UUID>
     @JsonIgnore
     private String password;
 
+    @Column(unique = true)
+    private String username;
+
     private String role = "ROLE_USER";
 
-    protected Account() {
+    public Account() {
 
     }
 
@@ -51,9 +40,14 @@ public class Account //extends AbstractAuditable<Account, UUID>
         this.role = role;
     }
 
-    public UUID getId() {
-        return id;
+
+    public Account(String email, String username, String password, String role) {
+        this.email = email;
+        this.username = username;
+        this.password = password;
+        this.role = role;
     }
+
 
     public String getEmail() {
         return email;
@@ -69,6 +63,14 @@ public class Account //extends AbstractAuditable<Account, UUID>
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getRole() {

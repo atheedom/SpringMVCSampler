@@ -1,4 +1,4 @@
-package com.springmvcsampler.support.web;
+package com.springmvcsampler.web.support.web;
 
 import java.io.Serializable;
 

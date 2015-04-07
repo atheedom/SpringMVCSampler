@@ -1,8 +1,8 @@
-package com.springmvcsampler.signup;
+package com.springmvcsampler.web.form;
 
 import org.hibernate.validator.constraints.*;
 
-import com.springmvcsampler.account.Account;
+import com.springmvcsampler.model.Account;
 
 public class SignupForm {
 
