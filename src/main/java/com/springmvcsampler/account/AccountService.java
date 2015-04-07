@@ -4,18 +4,24 @@ import java.util.Collections;
 
 import javax.annotation.PostConstruct;
 
+import com.springmvcsampler.repositories.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.*;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.*;
-import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
-public class UserService implements UserDetailsService {
+@Transactional(readOnly = true)
+public class AccountService implements UserDetailsService {
 	
 	@Autowired
 	private AccountRepository accountRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
 	@PostConstruct
 	protected void initialize() {
@@ -31,6 +37,12 @@ public class UserService implements UserDetailsService {
 		}
 		return createUser(account);
 	}
+
+    public Account save(Account account) {
+        account.setPassword(passwordEncoder.encode(account.getPassword()));
+        accountRepository.save(account);
+        return account;
+    }
 	
 	public void signin(Account account) {
 		SecurityContextHolder.getContext().setAuthentication(authenticate(account));

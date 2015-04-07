@@ -2,6 +2,7 @@ package com.springmvcsampler.config;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,13 +20,13 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppC
 @ContextConfiguration(classes = {
         ApplicationConfig.class,
         EmbeddedDataSourceConfig.class,
-        JpaConfig.class,
+        DatabaseConfig.class,
         NoCsrfSecurityConfig.class,
         WebMvcConfig.class
 })
 public abstract class WebAppConfigurationAware {
 
-    @Inject
+    @Autowired
     protected WebApplicationContext wac;
     protected MockMvc mockMvc;
 

@@ -6,6 +6,7 @@ import static org.mockito.Mockito.*;
 
 import java.util.Collection;
 
+import com.springmvcsampler.repositories.AccountRepository;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -18,10 +19,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @RunWith(MockitoJUnitRunner.class)
-public class UserServiceTest {
+public class AccountServiceTest {
 
 	@InjectMocks
-	private UserService userService = new UserService();
+	private AccountService accountService = new AccountService();
 
 	@Mock
 	private AccountRepository accountRepositoryMock;
@@ -32,7 +33,7 @@ public class UserServiceTest {
 	@Test
 	public void shouldInitializeWithTwoDemoUsers() {
 		// act
-		userService.initialize();
+		accountService.initialize();
 		// assert
 		verify(accountRepositoryMock, times(2)).save(any(Account.class));
 	}
@@ -45,7 +46,7 @@ public class UserServiceTest {
 
 		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(null);
 		// act
-		userService.loadUserByUsername("user@example.com");
+		accountService.loadUserByUsername("user@example.com");
 	}
 
 	@Test
@@ -55,7 +56,7 @@ public class UserServiceTest {
 		when(accountRepositoryMock.findByEmail("user@example.com")).thenReturn(demoUser);
 
 		// act
-		UserDetails userDetails = userService.loadUserByUsername("user@example.com");
+		UserDetails userDetails = accountService.loadUserByUsername("user@example.com");
 
 		// assert
 		assertThat(demoUser.getEmail()).isEqualTo(userDetails.getUsername());

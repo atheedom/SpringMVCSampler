@@ -3,62 +3,79 @@ package com.springmvcsampler.account;
 import javax.persistence.*;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.domain.Auditable;
+import org.springframework.data.jpa.domain.AbstractAuditable;
 
-@SuppressWarnings("serial")
+import java.util.Date;
+import java.util.UUID;
+
 @Entity
-@Table(name = "account")
-@NamedQuery(name = Account.FIND_BY_EMAIL, query = "select a from Account a where a.email = :email")
-public class Account implements java.io.Serializable {
+@Table(name = "Accounts",
+        indexes = {
+                @Index(name = "email_index", columnList = "email"),
+        }
+)
+@DynamicInsert
+@DynamicUpdate
+public class Account //extends AbstractAuditable<Account, UUID>
+{
 
-	public static final String FIND_BY_EMAIL = "Account.findByEmail";
+    @Id
+    @Column(nullable = false, unique = true)
+    @Type(type = "org.hibernate.type.UUIDCharType")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name="uuid", strategy="uuid2")
+    private UUID id;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+    @Column(unique = true)
+    private String email;
 
-	@Column(unique = true)
-	private String email;
-	
-	@JsonIgnore
-	private String password;
+    @JsonIgnore
+    private String password;
 
-	private String role = "ROLE_USER";
+    private String role = "ROLE_USER";
 
     protected Account() {
 
-	}
-	
-	public Account(String email, String password, String role) {
-		this.email = email;
-		this.password = password;
-		this.role = role;
-	}
+    }
 
-	public Long getId() {
-		return id;
-	}
+    public Account(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public UUID getId() {
+        return id;
+    }
 
     public String getEmail() {
-		return email;
-	}
+        return email;
+    }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public String getRole() {
-		return role;
-	}
+    public String getRole() {
+        return role;
+    }
 
-	public void setRole(String role) {
-		this.role = role;
-	}
+    public void setRole(String role) {
+        this.role = role;
+    }
 }
