@@ -1,20 +1,18 @@
 package com.springmvcsampler.web.controller;
 
-import java.security.Principal;
-
 import com.springmvcsampler.model.Account;
 import com.springmvcsampler.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.data.domain.Pageable;
+
+import java.security.Principal;
 
 @Controller
 @Secured("ROLE_USER")
@@ -36,9 +34,9 @@ class AccountController {
     }
 
 
-    @RequestMapping
-    public String showUsers(Model model, Pageable pageable) {
-        model.addAttribute("users", accountRepository.findAll(pageable));
-        return "users";
-    }
+//    @RequestMapping
+//    public String showUsers(Model model, Pageable pageable) {
+//        model.addAttribute("users", accountRepository.findAll(pageable));
+//        return "users";
+//    }
 }

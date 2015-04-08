@@ -26,6 +26,8 @@ import java.util.Properties;
 @EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfig {
 
+    public static final String PACKAGE_TO_SCAN = "com.springmvcsampler";
+
     @Value("${dataSource.driverClassName}")
     private String driver;
 
@@ -48,7 +50,7 @@ public class DatabaseConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(configureDataSource());
-        entityManagerFactoryBean.setPackagesToScan("com.springmvcsampler");
+        entityManagerFactoryBean.setPackagesToScan(PACKAGE_TO_SCAN);
         entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         entityManagerFactoryBean.setJpaProperties(additionalProperties());
         return entityManagerFactoryBean;
@@ -61,18 +63,6 @@ public class DatabaseConfig {
         return properties;
     }
 
-
-//        @Bean
-//        public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-//            LocalContainerEntityManagerFactoryBean em = new LocalContainerEntityManagerFactoryBean();
-//            em.setDataSource(dataSource());
-//            em.setPackagesToScan("com.springmvcsampler");
-//            JpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
-//            em.setJpaVendorAdapter(vendorAdapter);
-//            em.setJpaProperties(this.additionalProperties());
-//            return em;
-//        }
-
     @Bean
     public DataSource configureDataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -82,27 +72,6 @@ public class DatabaseConfig {
         dataSource.setPassword(password);
         return dataSource;
     }
-
-//    @Bean
-//    public DataSource configureDataSource() {
-//        HikariConfig config = new HikariConfig();
-//        config.setDriverClassName(driver);
-//        config.setJdbcUrl(url);
-//        config.setUsername(username);
-//        config.setPassword(password);
-//        config.addDataSourceProperty("cachePrepStmts", "true");
-//        config.addDataSourceProperty("prepStmtCacheSize", "250");
-//        config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-//        config.addDataSourceProperty("useServerPrepStmts", "true");
-//
-//        return new HikariDataSource(config);
-//    }
-
-
-//    @Bean
-//    public PlatformTransactionManager annotationDrivenTransactionManager() {
-//        return new JpaTransactionManager();
-//    }
 
     @Bean
     public PlatformTransactionManager transactionManager(EntityManagerFactory emf) {

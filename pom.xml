@@ -249,7 +249,7 @@
             <artifactId>spring-test</artifactId>
             <scope>test</scope>
         </dependency>
-        
+
         <!-- Avoid: javax.validation.ValidationException: HV000183: Unable to load 'javax.el.ExpressionFactory' -->
         <dependency>
             <groupId>javax.el</groupId>
