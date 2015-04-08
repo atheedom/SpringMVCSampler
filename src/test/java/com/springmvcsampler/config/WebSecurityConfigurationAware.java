@@ -1,15 +1,15 @@
 package com.springmvcsampler.config;
 
 import org.junit.Before;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.web.FilterChainProxy;
 
-import javax.inject.Inject;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.webAppContextSetup;
 
 public abstract class WebSecurityConfigurationAware extends WebAppConfigurationAware {
 
-    @Inject
+    @Autowired
     private FilterChainProxy springSecurityFilterChain;
 
     @Before

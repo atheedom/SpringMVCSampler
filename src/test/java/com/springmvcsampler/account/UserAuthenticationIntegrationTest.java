@@ -26,7 +26,6 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
     }
 
     @Test
-    //@Ignore
     public void userAuthenticates() throws Exception {
         final String username = "user";
         ResultMatcher matcher = new ResultMatcher() {
@@ -44,7 +43,6 @@ public class UserAuthenticationIntegrationTest extends WebSecurityConfigurationA
     }
 
     @Test
-    //@Ignore
     public void userAuthenticationFails() throws Exception {
         final String username = "user";
         mockMvc.perform(post("/authenticate").param("username", username).param("password", "invalid"))
