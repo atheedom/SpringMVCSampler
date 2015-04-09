@@ -3,7 +3,6 @@ package com.springmvcsampler.config;
 import com.springmvcsampler.service.UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -41,24 +40,53 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-            .authorizeRequests()
-                .antMatchers("/", "/favicon.ico", "/resources/**", "/signup").permitAll()
-                .anyRequest().authenticated()
-                .and()
-            .formLogin()
-                .loginPage("/signin")
-                .permitAll()
-                .failureUrl("/signin?error=1")
-                .loginProcessingUrl("/authenticate")
-                .and()
-            .logout()
-                .logoutUrl("/logout")
-                .permitAll()
-                .logoutSuccessUrl("/signin?logout")
-                .and()
-            .rememberMe()
-                .rememberMeServices(rememberMeServices())
-                .key("remember-me-key");
+            http
+                .authorizeRequests()
+                    .antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/login","/loggedout").permitAll()
+                    .antMatchers("/users/**").hasAuthority("ADMIN")
+                    .antMatchers("/application/**").hasAnyRole("ADMIN", "USER")
+                    .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
+                    .anyRequest().fullyAuthenticated()
+                    .and()
+                .formLogin()
+                    .loginPage("/login")
+                    .failureUrl("/login?error")
+                    .usernameParameter("username")
+                    .passwordParameter("password")
+                    .permitAll()
+                    .and()
+                .logout()
+                    .logoutUrl("/logout")
+                    .deleteCookies("remember-me")
+                    .logoutSuccessUrl("/loggedout")
+                    .permitAll()
+                    .and()
+                .rememberMe()
+                    .rememberMeServices(rememberMeServices())
+                    .key("remember-me-key");
     }
+
+
+//    @Override
+//    protected void configure(HttpSecurity http) throws Exception {
+//        http
+//            .authorizeRequests()
+//                .antMatchers("/", "/favicon.ico", "/resources/**", "/signup").permitAll()
+//                .anyRequest().authenticated()
+//                .and()
+//            .formLogin()
+//                .loginPage("/signin")
+//                .permitAll()
+//                .failureUrl("/signin?error=1")
+//                .loginProcessingUrl("/authenticate")
+//                .and()
+//            .logout()
+//                .logoutUrl("/logout")
+//                .permitAll()
+//                .logoutSuccessUrl("/signin?logout")
+//                .and()
+//            .rememberMe()
+//                .rememberMeServices(rememberMeServices())
+//                .key("remember-me-key");
+//    }
 }

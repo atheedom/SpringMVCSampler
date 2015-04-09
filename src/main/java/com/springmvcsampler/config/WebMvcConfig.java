@@ -1,5 +1,7 @@
 package com.springmvcsampler.config;
+
 import com.springmvcsampler.Application;
+import freemarker.template.TemplateException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -15,12 +17,10 @@ import org.springframework.web.servlet.config.annotation.DefaultServletHandlerCo
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
-import org.thymeleaf.extras.springsecurity3.dialect.SpringSecurityDialect;
-import org.thymeleaf.spring4.SpringTemplateEngine;
-import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-import org.thymeleaf.templateresolver.TemplateResolver;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
+import java.io.IOException;
 import java.util.List;
 
 import static org.springframework.context.annotation.ComponentScan.Filter;
@@ -34,6 +34,7 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
 
     private static final String RESOURCES_LOCATION = "/resources/";
     private static final String RESOURCES_HANDLER = RESOURCES_LOCATION + "**";
+    private static final String TEMPLATE_SUFFIX = ".ftl";
 
     @Override
     public RequestMappingHandlerMapping requestMappingHandlerMapping() {
@@ -51,31 +52,59 @@ class WebMvcConfig extends WebMvcConfigurationSupport {
         return messageSource;
     }
 
+//    @Bean
+//    public TemplateResolver templateResolver() {
+//        TemplateResolver templateResolver = new ServletContextTemplateResolver();
+//        templateResolver.setPrefix(VIEWS);
+//        templateResolver.setSuffix(".html");
+//        templateResolver.setTemplateMode("HTML5");
+//        templateResolver.setCacheable(false);
+//        return templateResolver;
+//    }
+//
+//    @Bean
+//    public SpringTemplateEngine templateEngine() {
+//        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+//        templateEngine.setTemplateResolver(templateResolver());
+//        templateEngine.addDialect(new SpringSecurityDialect());
+//        return templateEngine;
+//    }
+//
+//    @Bean
+//    public ThymeleafViewResolver viewResolver() {
+//        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
+//        thymeleafViewResolver.setTemplateEngine(templateEngine());
+//        thymeleafViewResolver.setCharacterEncoding("UTF-8");
+//        return thymeleafViewResolver;
+//    }
+
+
+
+
     @Bean
-    public TemplateResolver templateResolver() {
-        TemplateResolver templateResolver = new ServletContextTemplateResolver();
-        templateResolver.setPrefix(VIEWS);
-        templateResolver.setSuffix(".html");
-        templateResolver.setTemplateMode("HTML5");
-        templateResolver.setCacheable(false);
-        return templateResolver;
+    public FreeMarkerViewResolver freeMarkerViewResolver() {
+        FreeMarkerViewResolver resolver = new FreeMarkerViewResolver();
+        resolver.setPrefix(VIEWS);
+        resolver.setSuffix(TEMPLATE_SUFFIX);
+        resolver.setOrder(1); // Use this view resolver before any other view resolver
+        resolver.setContentType("text/html;charset=UTF-8");
+        resolver.setCache(true);
+        return resolver;
     }
 
     @Bean
-    public SpringTemplateEngine templateEngine() {
-        SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-        templateEngine.setTemplateResolver(templateResolver());
-        templateEngine.addDialect(new SpringSecurityDialect());
-        return templateEngine;
+    public FreeMarkerConfigurer freemarkerConfig() throws IOException, TemplateException {
+        FreeMarkerConfigurer result = new FreeMarkerConfigurer();
+        result.setTemplateLoaderPaths("/"); // prevents FreeMarkerConfigurer from using its default path allowing setPrefix to work as expected
+        // TODO: check to see if any of these should be set.
+//        result.setFreemarkerSettings();
+//        result.setFreemarkerVariables(); // xml_escape:fmXmlEscape
+        return result;
     }
 
-    @Bean
-    public ThymeleafViewResolver viewResolver() {
-        ThymeleafViewResolver thymeleafViewResolver = new ThymeleafViewResolver();
-        thymeleafViewResolver.setTemplateEngine(templateEngine());
-        thymeleafViewResolver.setCharacterEncoding("UTF-8");
-        return thymeleafViewResolver;
-    }
+
+
+
 
     @Override
     public Validator getValidator() {

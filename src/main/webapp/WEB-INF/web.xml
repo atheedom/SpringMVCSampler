@@ -6,4 +6,10 @@
 	<error-page>
     	<location>/generalError</location>
 	</error-page>
+
+	<display-name>JPM Database V1.0</display-name>
+	<description>Web application</description>
+
+	<distributable/>
+
 </web-app>

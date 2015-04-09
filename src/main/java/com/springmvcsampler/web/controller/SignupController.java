@@ -17,31 +17,31 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.validation.Valid;
 
 @Controller
-public class SignupController    {
+public class SignupController {
 
     private static final String SIGNUP_VIEW_NAME = "signup/signup";
-	
-	@Autowired
-	private AccountService accountService;
 
-	@Autowired
-	private UserService userService;
+    @Autowired
+    private AccountService accountService;
 
-	@RequestMapping(value = "signup")
-	public String signup(Model model) {
-		model.addAttribute(new SignupForm());
+    @Autowired
+    private UserService userService;
+
+    @RequestMapping(value = "signup")
+    public String signup(Model model) {
+        model.addAttribute(new SignupForm());
         return SIGNUP_VIEW_NAME;
-	}
-	
-	@RequestMapping(value = "signup", method = RequestMethod.POST)
-	public String signup(@Valid @ModelAttribute SignupForm signupForm, Errors errors, RedirectAttributes ra) {
-		if (errors.hasErrors()) {
-			return SIGNUP_VIEW_NAME;
-		}
-		Account account = accountService.save(signupForm.createAccount());
-		userService.signin(account);
+    }
+
+    @RequestMapping(value = "signup", method = RequestMethod.POST)
+    public String signup(@Valid @ModelAttribute SignupForm signupForm, Errors errors, RedirectAttributes ra) {
+        if (errors.hasErrors()) {
+            return SIGNUP_VIEW_NAME;
+        }
+        Account account = accountService.save(signupForm.createAccount());
+        userService.signin(account);
         // see /WEB-INF/i18n/messages.properties and /WEB-INF/views/homeSignedIn.html
         MessageHelper.addSuccessAttribute(ra, "signup.success");
-		return "redirect:/";
-	}
+        return "redirect:/";
+    }
 }
