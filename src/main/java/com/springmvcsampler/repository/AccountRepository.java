@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Repository("Account Repository")
@@ -28,5 +29,5 @@ public interface AccountRepository extends JpaRepository<Account, UUID> {
     Page<Account> findAll(Pageable pageable);
 
 
-
+    Optional<Account> findOneByEmail(String email);
 }

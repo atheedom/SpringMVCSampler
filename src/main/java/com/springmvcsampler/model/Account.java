@@ -1,47 +1,50 @@
 package com.springmvcsampler.model;
 
+import com.springmvcsampler.web.form.SignupForm;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Index;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "Accounts",
         indexes = {
                 @Index(name = "email_index", columnList = "email"),
+                @Index(name = "username_index", columnList = "username"),
+                @Index(name = "role_index", columnList = "role")
         }
 )
 @DynamicInsert
 @DynamicUpdate
 public class Account extends BaseEntity<Account> {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String email;
 
     @JsonIgnore
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String username;
 
-    private String role = "ROLE_USER";
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private SignupForm.Role role = SignupForm.Role.ROLE_USER;
 
     public Account() {
 
     }
 
-    public Account(String email, String password, String role) {
+    public Account(String email, String password, SignupForm.Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
 
-    public Account(String email, String username, String password, String role) {
+    public Account(String email, String username, String password, SignupForm.Role role) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -73,11 +76,11 @@ public class Account extends BaseEntity<Account> {
         this.username = username;
     }
 
-    public String getRole() {
+    public SignupForm.Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(SignupForm.Role role) {
         this.role = role;
     }
 }

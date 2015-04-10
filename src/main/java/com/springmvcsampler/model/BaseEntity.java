@@ -34,5 +34,5 @@ public class BaseEntity<T> // extends AbstractAuditable<Account, UUID>
     }
 
 
-    // TODO - add other methosd common to all entities
+    // TODO - add other methods common to all entities
 }
