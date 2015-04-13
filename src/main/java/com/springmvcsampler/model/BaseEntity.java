@@ -1,5 +1,7 @@
 package com.springmvcsampler.model;
 
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -10,7 +12,8 @@ import java.util.UUID;
 /**
  * Created by atheedom on 07/04/15.
  */
-
+@DynamicInsert
+@DynamicUpdate
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity<T> // extends AbstractAuditable<Account, UUID>

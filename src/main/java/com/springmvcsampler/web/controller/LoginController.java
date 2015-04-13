@@ -21,13 +21,13 @@ public class LoginController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public ModelAndView getLoginPage(@RequestParam Optional<String> error) {
         LOGGER.debug("Getting log in page, error={}", error);
-        return new ModelAndView("signin/login", "error", error);
+        return new ModelAndView("login/login", "error", error);
     }
 
     @RequestMapping(value = "/loggedout", method = RequestMethod.GET)
     public ModelAndView getLogoutPage(@RequestParam Optional<String> error) {
         LOGGER.debug("Getting logged out page, error={}", error);
-        return new ModelAndView("signin/loggedout", "error", error);
+        return new ModelAndView("login/loggedout", "error", error);
     }
 
 }

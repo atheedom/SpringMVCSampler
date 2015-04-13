@@ -19,22 +19,22 @@ import java.util.Collections;
 /**
  * Created by atheedom on 07/04/15.
  */
-@Service()
+@Service("Service that manages the scurity of user accounts")
 public class UserService implements UserDetailsService {
 
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Override
     public CustomUserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Account account = accountRepository.findByUsername(username);
         if (account == null) {
-            throw new UsernameNotFoundException("user not found");
+            throw new UsernameNotFoundException("Account not found");
         }
         return createUser(account);
     }
 
-    public void signin(Account account) {
+    public void logIn(Account account) {
         SecurityContextHolder.getContext().setAuthentication(authenticate(account));
     }
 

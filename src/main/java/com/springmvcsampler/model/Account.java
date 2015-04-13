@@ -1,9 +1,6 @@
 package com.springmvcsampler.model;
 
-import com.springmvcsampler.web.form.SignupForm;
-import org.codehaus.jackson.annotate.JsonIgnore;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
+import com.springmvcsampler.web.form.AccountCreateForm;
 
 import javax.persistence.*;
 
@@ -15,14 +12,11 @@ import javax.persistence.*;
                 @Index(name = "role_index", columnList = "role")
         }
 )
-@DynamicInsert
-@DynamicUpdate
 public class Account extends BaseEntity<Account> {
 
     @Column(unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
     @Column(nullable = false)
     private String password;
 
@@ -31,20 +25,20 @@ public class Account extends BaseEntity<Account> {
 
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
-    private SignupForm.Role role = SignupForm.Role.ROLE_USER;
+    private AccountCreateForm.Role role = AccountCreateForm.Role.ROLE_USER;
 
     public Account() {
 
     }
 
-    public Account(String email, String password, SignupForm.Role role) {
+    public Account(String email, String password, AccountCreateForm.Role role) {
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
 
-    public Account(String email, String username, String password, SignupForm.Role role) {
+    public Account(String email, String username, String password, AccountCreateForm.Role role) {
         this.email = email;
         this.username = username;
         this.password = password;
@@ -76,11 +70,11 @@ public class Account extends BaseEntity<Account> {
         this.username = username;
     }
 
-    public SignupForm.Role getRole() {
+    public AccountCreateForm.Role getRole() {
         return role;
     }
 
-    public void setRole(SignupForm.Role role) {
+    public void setRole(AccountCreateForm.Role role) {
         this.role = role;
     }
 }

@@ -3,13 +3,11 @@ package com.springmvcsampler.service;
 import com.springmvcsampler.model.Account;
 import com.springmvcsampler.model.CustomUserDetails;
 import com.springmvcsampler.repository.AccountRepository;
-import com.springmvcsampler.web.form.SignupForm;
+import com.springmvcsampler.web.form.AccountCreateForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -25,9 +23,6 @@ import java.util.UUID;
 public class AccountService  {
 
 	@Autowired
-	private UserService userService;
-
-	@Autowired
 	private AccountRepository accountRepository;
 
     @Autowired
@@ -35,8 +30,8 @@ public class AccountService  {
 
 	@PostConstruct
 	public void initialize() {
-            this.save(new Account("user@example.com", "user", "demo", SignupForm.Role.ROLE_USER));
-            this.save(new Account("admin@example.com", "admin", "admin", SignupForm.Role.ROLE_ADMIN));
+            this.save(new Account("user@example.com", "user", "demo", AccountCreateForm.Role.ROLE_USER));
+            this.save(new Account("admin@example.com", "admin", "admin", AccountCreateForm.Role.ROLE_ADMIN));
 	}
 
     public Account save(Account account) {
@@ -45,16 +40,13 @@ public class AccountService  {
         return account;
     }
 
-	public Account create(SignupForm form) {
+	public Account create(AccountCreateForm form) {
 		Account account = new Account();
+		account.setUsername(form.getUsername());
 		account.setEmail(form.getEmail());
 		account.setPassword(passwordEncoder.encode(form.getPassword()));
 		account.setRole(form.getRole());
 		return accountRepository.save(account);
-	}
-
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
-		return userService.loadUserByUsername(username);
 	}
 
 	public Account getCurrentAccount() {
