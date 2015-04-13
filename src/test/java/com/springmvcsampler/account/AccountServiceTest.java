@@ -5,7 +5,7 @@ import com.springmvcsampler.model.CustomUserDetails;
 import com.springmvcsampler.repository.AccountRepository;
 import com.springmvcsampler.service.AccountService;
 import com.springmvcsampler.service.UserService;
-import com.springmvcsampler.web.form.SignupForm;
+import com.springmvcsampler.web.form.AccountCreateForm;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -55,7 +55,7 @@ public class AccountServiceTest {
 	public void shouldThrowExceptionWhenUserNotFound() {
 		// arrange
 		thrown.expect(UsernameNotFoundException.class);
-		thrown.expectMessage("user not found");
+		thrown.expectMessage("Account not found");
 
 		when(accountRepositoryMock.findByUsername("user")).thenReturn(null);
 		// act
@@ -65,7 +65,7 @@ public class AccountServiceTest {
 	@Test
 	public void shouldReturnUserDetails() {
 		// arrange
-		Account demoUser = new Account("user@example.com", "user", "demo", SignupForm.Role.ROLE_USER);
+		Account demoUser = new Account("user@example.com", "user", "demo", AccountCreateForm.Role.ROLE_USER);
 		when(accountRepositoryMock.findByUsername("user")).thenReturn(demoUser);
 
 		// act
