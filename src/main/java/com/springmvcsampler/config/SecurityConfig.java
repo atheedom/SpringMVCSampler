@@ -42,8 +42,8 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
             http
                 .authorizeRequests()
-                    .antMatchers("/", "/favicon.ico", "/resources/**", "/signup", "/login","/loggedout").permitAll()
-                    .antMatchers("/users/**").hasAuthority("ADMIN")
+                    .antMatchers("/", "/favicon.ico", "/resources/**", "/login", "/loggedout").permitAll()
+                    .antMatchers("/accounts/**").hasAnyRole("ADMIN")
                     .antMatchers("/application/**").hasAnyRole("ADMIN", "USER")
                     .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
                     .anyRequest().fullyAuthenticated()
@@ -66,27 +66,4 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .key("remember-me-key");
     }
 
-
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
-//        http
-//            .authorizeRequests()
-//                .antMatchers("/", "/favicon.ico", "/resources/**", "/signup").permitAll()
-//                .anyRequest().authenticated()
-//                .and()
-//            .formLogin()
-//                .loginPage("/signin")
-//                .permitAll()
-//                .failureUrl("/signin?error=1")
-//                .loginProcessingUrl("/authenticate")
-//                .and()
-//            .logout()
-//                .logoutUrl("/logout")
-//                .permitAll()
-//                .logoutSuccessUrl("/signin?logout")
-//                .and()
-//            .rememberMe()
-//                .rememberMeServices(rememberMeServices())
-//                .key("remember-me-key");
-//    }
 }
