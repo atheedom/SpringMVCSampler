@@ -2,7 +2,7 @@
 <html>
 <#import "/spring.ftl" as spring />
 <head>
-    <title>Welcome to the JPM database project.</title>
+    <title>Welcome to the Spring MVC Sampler Application.</title>
 
     <#include "../fragments/media.ftl">
 
@@ -13,7 +13,7 @@
     <div class="text-center">
         <h1>Test</h1>
         <p class="lead">
-            Welcome to the JPM database project.
+            Welcome to the Spring MVC Sampler Application.
         </p>
         <p>
             <a href="<@spring.url '/signup'/>" class="btn btn-success btn-lg">Sign up</a>

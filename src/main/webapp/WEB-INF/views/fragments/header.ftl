@@ -8,7 +8,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">JPM database project</a>
+            <a class="navbar-brand" href="#">Spring MVC Sampler Application</a>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">

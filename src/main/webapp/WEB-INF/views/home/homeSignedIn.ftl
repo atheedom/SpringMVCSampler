@@ -18,7 +18,7 @@
         <#--<div th:replace="fragments/alert :: alert (type=${#strings.toLowerCase(message.type)}, message=#{${message.message}(${#authentication.name})})">&nbsp;</div>-->
     <#--</th:block>-->
     <p>
-        Welcome to the JPM Database application!
+        Welcome to the Spring MVC Sampler Application!
     </p>
 
 

@@ -1,6 +1,6 @@
 
     <div>
-        &copy; 2015 JPM
+        &copy; 2015
     </div>
 
 
