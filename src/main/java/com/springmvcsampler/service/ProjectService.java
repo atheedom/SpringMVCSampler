@@ -37,7 +37,7 @@ public class ProjectService {
 		return projectRepository.save(new Project(form.getName(), form.getClientName(), form.getStartDate(), form.getEndDate(), form.getDescription(), form.getGlobalOHP()));
 	}
 
-	public Optional<Project> getProjectById(UUID id) {
+	public Optional<Project> getProjectById(Long id) {
 		return projectRepository.findById(id);
 	}
 

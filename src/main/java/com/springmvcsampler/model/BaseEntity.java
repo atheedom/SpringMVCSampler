@@ -21,9 +21,7 @@ public class BaseEntity<T> // extends AbstractAuditable<Account, UUID>
 
     @Id
     @Column(nullable = false, unique = true)
-    @Type(type = "org.hibernate.type.UUIDCharType")
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name="uuid", strategy="uuid2")
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     //@Override

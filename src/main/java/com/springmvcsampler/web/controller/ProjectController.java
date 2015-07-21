@@ -46,7 +46,7 @@ public class ProjectController {
     }
 
     @RequestMapping("/projects/{id}")
-    public ModelAndView getProjectPage(@PathVariable UUID id) {
+    public ModelAndView getProjectPage(@PathVariable Long id) {
         return new ModelAndView("project", "project", projectService.getProjectById(id).orElseThrow(() -> new NoSuchElementException(String.format("Project=%s not found", id))));
     }
 

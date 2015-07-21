@@ -60,7 +60,7 @@ class AccountController implements AbstractPersonController {
     }
 
     @RequestMapping("/accounts/{id}")
-    public ModelAndView viewAccount(@PathVariable UUID id) {
+    public ModelAndView viewAccount(@PathVariable Long id) {
         return new ModelAndView(ACCOUNT_VIEW, "account", accountService.getUserById(id)
                 .orElseThrow(() -> new NoSuchElementException(String.format("User=%s not found", id))));
     }

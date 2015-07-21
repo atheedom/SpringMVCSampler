@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository("Account Repository")
-public interface AccountRepository extends JpaRepository<Account, UUID> {
+public interface AccountRepository extends JpaRepository<Account, Long> {
 
 	@Query("FROM Account a WHERE a.id = :id")
-    Account findById(@Param("id") UUID id);
+    Account findById(@Param("id") Long id);
 
     @Query("FROM Account a WHERE a.email = :email")
     Account findByEmail(@Param("email") String email);

@@ -71,7 +71,7 @@ public class AccountService  {
 		return accountRepository.findAll(new Sort("username"));
 	}
 
-	public Optional<Account> getUserById(UUID id) {
+	public Optional<Account> getUserById(Long id) {
 		return Optional.ofNullable(accountRepository.findOne(id));
 	}
 

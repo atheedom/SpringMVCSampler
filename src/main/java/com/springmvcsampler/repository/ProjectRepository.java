@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository("Project Repository")
-public interface ProjectRepository extends JpaRepository<Project, UUID> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
 	@Query("FROM Project p WHERE p.id = :id")
-    Optional<Project> findById(@Param("id") UUID id);
+    Optional<Project> findById(@Param("id") Long id);
 
     @Query("FROM Project p WHERE p.name = :name")
     Optional<Project> findByName(@Param("name") String name);
