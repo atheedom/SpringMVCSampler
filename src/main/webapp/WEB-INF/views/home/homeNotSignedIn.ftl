@@ -20,6 +20,18 @@
         </p>
     </div>
 
+
+    <div class="text-center">
+
+        <h1>Freemarker Snippets</h1>
+
+        <a href="freemarker/formelements">Form Elements</a>
+
+
+
+
+    </div>
+
 <#include "../fragments/footer.ftl">
 
 </div>

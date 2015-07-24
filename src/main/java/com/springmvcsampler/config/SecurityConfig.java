@@ -28,42 +28,42 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new StandardPasswordEncoder();
-	}
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-            .eraseCredentials(true)
-            .userDetailsService(userService())
-            .passwordEncoder(passwordEncoder());
+                .eraseCredentials(true)
+                .userDetailsService(userService())
+                .passwordEncoder(passwordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-            http
+        http
                 .authorizeRequests()
-                    .antMatchers("/", "/favicon.ico", "/resources/**", "/login", "/loggedout").permitAll()
-                    .antMatchers("/accounts/**").hasAnyRole("ADMIN")
-                    .antMatchers("/application/**").hasAnyRole("ADMIN", "USER")
-                    .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
-                    .anyRequest().fullyAuthenticated()
-                    .and()
+                .antMatchers("/", "/favicon.ico", "/resources/**", "/login", "/loggedout", "/freemarker/formelements").permitAll()
+                .antMatchers("/accounts/**").hasAnyRole("ADMIN")
+                .antMatchers("/application/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
+                .anyRequest().fullyAuthenticated()
+                .and()
                 .formLogin()
-                    .loginPage("/login")
-                    .failureUrl("/login?error")
-                    .usernameParameter("username")
-                    .passwordParameter("password")
-                    .permitAll()
-                    .and()
+                .loginPage("/login")
+                .failureUrl("/login?error")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .permitAll()
+                .and()
                 .logout()
-                    .logoutUrl("/logout")
-                    .deleteCookies("remember-me")
-                    .logoutSuccessUrl("/loggedout")
-                    .permitAll()
-                    .and()
+                .logoutUrl("/logout")
+                .deleteCookies("remember-me")
+                .logoutSuccessUrl("/loggedout")
+                .permitAll()
+                .and()
                 .rememberMe()
-                    .rememberMeServices(rememberMeServices())
-                    .key("remember-me-key");
+                .rememberMeServices(rememberMeServices())
+                .key("remember-me-key");
     }
 
 }

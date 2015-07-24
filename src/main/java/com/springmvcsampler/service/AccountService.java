@@ -16,9 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.PostConstruct;
 import java.util.Collection;
 import java.util.Optional;
-import java.util.UUID;
 
-@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
 @Service("Service that manages accounts and security")
 public class AccountService  {
 
@@ -30,11 +28,12 @@ public class AccountService  {
 
 	@PostConstruct
 	public void initialize() {
-            this.save(new Account("user@example.com", "user", "demo", AccountCreateForm.Role.ROLE_USER));
-            this.save(new Account("admin@example.com", "admin", "admin", AccountCreateForm.Role.ROLE_ADMIN));
+//            this.save(new Account("user@example.com", "user", "demo", AccountCreateForm.Role.ROLE_USER));
+//            this.save(new Account("admin@example.com", "admin", "admin", AccountCreateForm.Role.ROLE_ADMIN));
 	}
 
-    public Account save(Account account) {
+	@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
+	public Account save(Account account) {
         account.setPassword(passwordEncoder.encode(account.getPassword()));
         accountRepository.save(account);
         return account;

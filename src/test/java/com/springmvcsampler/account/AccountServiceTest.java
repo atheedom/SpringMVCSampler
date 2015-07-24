@@ -6,6 +6,7 @@ import com.springmvcsampler.repository.AccountRepository;
 import com.springmvcsampler.service.AccountService;
 import com.springmvcsampler.service.UserService;
 import com.springmvcsampler.web.form.AccountCreateForm;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -24,6 +25,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
+@Ignore
 @RunWith(MockitoJUnitRunner.class)
 public class AccountServiceTest {
 

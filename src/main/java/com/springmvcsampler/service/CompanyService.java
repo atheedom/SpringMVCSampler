@@ -1,25 +1,15 @@
 package com.springmvcsampler.service;
 
 import com.springmvcsampler.model.Company;
-import com.springmvcsampler.model.Employee;
-import com.springmvcsampler.model.PayGrade;
-import com.springmvcsampler.model.Project;
 import com.springmvcsampler.repository.CompanyRepository;
 import com.springmvcsampler.repository.PayGradeRepository;
-import com.springmvcsampler.repository.ProjectRepository;
-import com.springmvcsampler.web.form.ProjectCreateForm;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
-import java.math.BigDecimal;
-import java.util.*;
 
-@Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
 @Service("Service that manages companies")
 public class CompanyService {
 
@@ -42,25 +32,26 @@ public class CompanyService {
 //        Employee e3 = new Employee("Sarah", payGradeRepository.findByGrade("B").get());
 //        Employee e4 = new Employee("Lora", payGradeRepository.findByGrade("C").get());
 
-
-        Employee e1 = new Employee("John");
-        Employee e2 = new Employee("David");
-        Employee e3 = new Employee("Sarah");
-        Employee e4 = new Employee("Lora");
-
-        List<Employee> employees = new ArrayList<>();
-        employees.add(e1);
-        employees.add(e2);
-        employees.add(e3);
-        employees.add(e4);
-
-        Company company = new Company("ABC Ltd", employees);
-
-        company.addSelfToEmployees();
-
-        this.save(company);
+//
+//        Employee e1 = new Employee("John");
+//        Employee e2 = new Employee("David");
+//        Employee e3 = new Employee("Sarah");
+//        Employee e4 = new Employee("Lora");
+//
+//        List<Employee> employees = new ArrayList<>();
+//        employees.add(e1);
+//        employees.add(e2);
+//        employees.add(e3);
+//        employees.add(e4);
+//
+//        Company company = new Company("ABC Ltd", employees);
+//
+//        company.addSelfToEmployees();
+//
+//        this.save(company);
     }
 
+    @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Company save(Company company) {
         companyRepository.save(company);
         return company;

@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
@@ -23,10 +22,10 @@ import java.util.Properties;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories("com.springmvcsampler.repository")
-@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
+//@EnableJpaAuditing(auditorAwareRef = "springSecurityAuditorAware")
 public class DatabaseConfig {
 
-    public static final String PACKAGE_TO_SCAN = "com.springmvcsampler";
+    public static final String PACKAGE_TO_SCAN = "com.springmvcsampler.model";
 
     @Value("${dataSource.driverClassName}")
     private String driver;
@@ -46,6 +45,8 @@ public class DatabaseConfig {
     @Value("${hibernate.hbm2ddl.auto}")
     private String hbm2ddlAuto;
 
+
+
     @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -62,6 +63,15 @@ public class DatabaseConfig {
         properties.setProperty(org.hibernate.cfg.Environment.DIALECT, dialect);
         return properties;
     }
+
+//    @Bean
+//    public JpaVendorAdapter jpaVendorAdapter() {
+//        HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
+//        hibernateJpaVendorAdapter.setShowSql(true);
+//        hibernateJpaVendorAdapter.setGenerateDdl(true); //Auto creating scheme when true
+//        hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);//Database type
+//        return hibernateJpaVendorAdapter;
+//    }
 
     @Bean
     public DataSource configureDataSource() {

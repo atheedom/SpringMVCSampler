@@ -19,7 +19,7 @@ public interface PayGradeRepository extends JpaRepository<PayGrade, Long> {
     Optional<PayGrade> findById(@Param("id") Long id);
 
     @Query("FROM PayGrade p WHERE p.grade = :grade")
-    Optional<PayGrade> findByGrade(@Param("name") String grade);
+    Optional<PayGrade> findByGrade(@Param("grade") String grade);
 
     @Query("FROM PayGrade p")
     Page<PayGrade> findAll(Pageable pageable);
