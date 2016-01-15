@@ -2,11 +2,9 @@ package com.springmvcsampler.model;
 
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.UUID;
 
 /**
@@ -15,8 +13,8 @@ import java.util.UUID;
 @DynamicInsert
 @DynamicUpdate
 @MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public class BaseEntity<T> // extends AbstractAuditable<Account, UUID>
+//@EntityListeners(AuditingEntityListener.class)
+public class BaseEntity<T> implements Serializable // extends AbstractAuditable<Account, UUID>
  {
 
     @Id

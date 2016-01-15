@@ -9,12 +9,12 @@ import java.util.List;
  */
 @Entity
 @Table(name = "Companies")
-public class Company extends BaseEntity {
+public class Company extends BaseEntity<Company> {
 
     @Column(unique = true, nullable = false)
     private String name;
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.EAGER, mappedBy = "company")
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Employee> employees;
 
 
@@ -26,9 +26,9 @@ public class Company extends BaseEntity {
         this.setEmployees(employees);
     }
 
-    public void addSelfToEmployees() {
-        employees.stream().forEach(e -> e.setCompany(this));
-    }
+//    public void addSelfToEmployees() {
+//        employees.stream().forEach(e -> e.setCompany(this));
+//    }
 
     public String getName() {
         return name;

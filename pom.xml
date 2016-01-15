@@ -4,25 +4,16 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"
         >
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.springmvcsampler</groupId>
+    <groupId>com.alextheedom</groupId>
     <artifactId>springmvcsampler</artifactId>
     <packaging>war</packaging>
     <version>1.0</version>
     <name>Spring MVC Application</name>
 
-    <organization>
-        <name>IndigCoCo</name>
-        <url>www.indigococo.com</url>
-    </organization>
-
     <developers>
         <developer>
             <id>alex</id>
             <name>Alex Theedom</name>
-            <email>alex@indigococo.com</email>
-            <url>http://www.indigococo.com</url>
-            <organization>IndigoCoCo</organization>
-            <organizationUrl>http://www.indigococo.com</organizationUrl>
             <roles>
                 <role>Senior Java Developer</role>
             </roles>
@@ -272,13 +263,16 @@
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-core</artifactId>
-            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-all</artifactId>
         </dependency>
 
         <dependency>
             <groupId>org.hamcrest</groupId>
             <artifactId>hamcrest-library</artifactId>
-            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -323,6 +317,46 @@
 
     <!-- Build Profiles -->
     <profiles>
+
+        <!-- Skip Tests -->
+        <profile>
+            <id>skip_tests</id>
+            <properties>
+                <maven.test.skip>true</maven.test.skip>
+            </properties>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <!-- This determines the name of the apps root in tomcat -->
+                <finalName>v${project.version}#${project.artifactId}</finalName>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-war-plugin</artifactId>
+                        <version>${maven-war-plugin.version}</version>
+
+                        <configuration>
+                            <!-- output directory is defined in the settings.xml file in the Maven install directory -->
+                            <outputDirectory>${tomcat-deploy-path}</outputDirectory>
+                            <failOnMissingWebXml>false</failOnMissingWebXml>
+
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.0</version>
+                        <configuration>
+                            <source>${java.version}</source>
+                            <target>${java.version}</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+
         <!-- Local -->
         <profile>
             <id>local</id>

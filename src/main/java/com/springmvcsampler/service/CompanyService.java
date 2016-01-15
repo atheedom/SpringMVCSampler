@@ -53,6 +53,7 @@ public class CompanyService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, rollbackFor = Exception.class)
     public Company save(Company company) {
+//        company.addSelfToEmployees();
         companyRepository.save(company);
         return company;
     }

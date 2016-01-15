@@ -42,7 +42,7 @@ class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/favicon.ico", "/resources/**", "/login", "/loggedout", "/freemarker/formelements").permitAll()
+                .antMatchers("/", "/favicon.ico", "/resources/**", "/login", "/loggedout", "/freemarker/formelements", "/company/create").permitAll()
                 .antMatchers("/accounts/**").hasAnyRole("ADMIN")
                 .antMatchers("/application/**").hasAnyRole("ADMIN", "USER")
                 .antMatchers("/logout").hasAnyRole("ADMIN", "USER")
