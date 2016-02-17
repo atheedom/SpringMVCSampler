@@ -12,8 +12,7 @@ import org.springframework.stereotype.Controller;
 
 import static org.springframework.context.annotation.ComponentScan.Filter;
 
-//@EnableCaching
-@ServiceRegistration(enabled = true)
+@ServiceRegistration(serviceName = "MyService")
 @Configuration
 @ComponentScan(basePackageClasses = Application.class, excludeFilters = @Filter({Controller.class, Configuration.class}))
 @EnableJpaRepositories("com.springmvcsampler.repository")

@@ -5,14 +5,14 @@ package com.springmvcsampler.registry;
  */
 public class RegistrationConfiguration {
 
-    private boolean enabled;
+    private String serviceName;
 
-    public RegistrationConfiguration(boolean enabled) {
-        this.enabled = enabled;
+    public RegistrationConfiguration(String serviceName) {
+        this.serviceName = serviceName;
     }
 
-    public boolean enabled() {
-        return enabled;
+    public String serviceName() {
+        return serviceName;
     }
 
 
