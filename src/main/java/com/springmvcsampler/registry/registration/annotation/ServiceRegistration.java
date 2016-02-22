@@ -1,4 +1,4 @@
-package com.springmvcsampler.registry;
+package com.springmvcsampler.registry.registration.annotation;
 
 import org.springframework.scheduling.annotation.EnableAsync;
 

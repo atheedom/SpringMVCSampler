@@ -1,16 +1,14 @@
-package com.springmvcsampler.registry;
-
-import org.springframework.stereotype.Component;
+package com.springmvcsampler.registry.client;
 
 import java.util.logging.Logger;
 
 /**
  * Created by atheedom on 13/02/2016.
  */
-@Component
+//@Component
 public class ServiceRegistryClient {
 
-    private static final Logger LOGGER = Logger.getLogger("eu.agilejava.snoop");
+    private static final Logger LOGGER = Logger.getLogger("");
 
     private final String applicationName;
     private final String host;
@@ -71,7 +69,7 @@ public class ServiceRegistryClient {
         this.port = builder.port;
         this.queueName = builder.queueName;
 
-        LOGGER.info(() -> "client created for " + applicationName);
+        LOGGER.info(() -> "Client created for " + applicationName);
     }
 
 }

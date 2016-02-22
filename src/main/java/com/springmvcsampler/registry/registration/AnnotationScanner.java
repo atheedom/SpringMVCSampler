@@ -1,6 +1,7 @@
-package com.springmvcsampler.registry;
+package com.springmvcsampler.registry.registration;
 
 
+import com.springmvcsampler.registry.registration.annotation.ServiceRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationEventPublisher;
@@ -17,7 +18,7 @@ import java.util.Set;
  * Created by atheedom on 15/01/2016.
  */
 @Component
-public class ServiceRegistrationEventListener {
+public class AnnotationScanner {
 
     private static final String ANNOTATED_CLASSES = "annotatedClasses";
 
@@ -26,6 +27,9 @@ public class ServiceRegistrationEventListener {
 
     @Autowired
     ApplicationContext applicationContext;
+
+    @Autowired
+    ServiceHelper serviceHelper;
 
     @EventListener
     void contextRefreshedEvent(ContextRefreshedEvent event) throws NoSuchFieldException, IllegalAccessException {
@@ -41,9 +45,11 @@ public class ServiceRegistrationEventListener {
                         for (Annotation annotation : clazz.getDeclaredAnnotations()) {
                             if (annotation.annotationType().isAssignableFrom(ServiceRegistration.class)) {
 
-                                RegistrationConfiguration rc = new RegistrationConfiguration(((ServiceRegistration) annotation).serviceName());
+                                // set the service config on the help singleton
+                                serviceHelper.setServiceName(((ServiceRegistration) annotation).serviceName());
 
-                                applicationEventPublisher.publishEvent(new ServiceRegistrationEvent(rc));
+                                // fire service registration event
+                                applicationEventPublisher.publishEvent(new ServiceRegistrationEvent(serviceHelper));
                             }
                         }
                     }

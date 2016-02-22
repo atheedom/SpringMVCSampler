@@ -10,37 +10,16 @@
     <version>1.0</version>
     <name>Spring MVC Application</name>
 
-    <organization>
-        <name>IndigCoCo</name>
-        <url>www.indigococo.com</url>
-    </organization>
-
     <developers>
         <developer>
             <id>alex</id>
             <name>Alex Theedom</name>
-            <email>alex@indigococo.com</email>
-            <url>http://www.indigococo.com</url>
-            <organization>IndigoCoCo</organization>
-            <organizationUrl>http://www.indigococo.com</organizationUrl>
             <roles>
                 <role>Senior Java Developer</role>
             </roles>
         </developer>
     </developers>
 
-    <contributors>
-        <contributor>
-            <name>Felicity Goddard</name>
-            <email>felicity@indigococo.com</email>
-            <url>http://www.indigococo.com</url>
-            <organization>IndigoCoCo</organization>
-            <organizationUrl>http://www.indigococo.com</organizationUrl>
-            <roles>
-                <role>Project Manager</role>
-            </roles>
-        </contributor>
-    </contributors>
 
     <properties>
 
@@ -323,13 +302,17 @@
             <version>${slf4j.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>2.5.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>3.4.2</version>
+        </dependency>
 
     </dependencies>
 

@@ -1,7 +1,7 @@
 package com.springmvcsampler.config;
 
 import com.springmvcsampler.Application;
-import com.springmvcsampler.registry.ServiceRegistration;
+import com.springmvcsampler.registry.registration.annotation.ServiceRegistration;
 import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
