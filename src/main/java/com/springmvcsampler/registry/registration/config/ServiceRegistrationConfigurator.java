@@ -1,14 +1,21 @@
-package com.springmvcsampler.registry.client;
+package com.springmvcsampler.registry.registration.config;
 
 import com.springmvcsampler.registry.registration.ServiceHelper;
-import com.springmvcsampler.registry.registration.ServiceRegistrationEvent;
+import com.springmvcsampler.registry.registration.ServiceRegistryConfig;
+import com.springmvcsampler.registry.registration.event.ServiceConfigurationEvent;
+import com.springmvcsampler.registry.registration.event.ServiceRegistrationEvent;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationListener;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.error.YAMLException;
 
 import javax.annotation.PostConstruct;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -16,15 +23,21 @@ import java.util.logging.Logger;
 /**
  * Created by atheedom on 21/01/2016.
  */
-//@Async
-//@Component
+@Async
+@Component
 public class ServiceRegistrationConfigurator implements ApplicationListener<ServiceRegistrationEvent> {
 
     private static final Logger LOGGER = Logger.getLogger("");
     private Map<String, Object> serviceRegistrationConfig = Collections.EMPTY_MAP;
 
     @Autowired
-    private ServiceRegistryClient serviceRegistryClient;
+    private ServiceRegistryConfig serviceRegistryConfig;
+
+    @Autowired
+    ApplicationContext applicationContext;
+
+    @Autowired
+    ApplicationEventPublisher applicationEventPublisher;
 
     @Override
     public void onApplicationEvent(ServiceRegistrationEvent event) {
@@ -45,14 +58,18 @@ public class ServiceRegistrationConfigurator implements ApplicationListener<Serv
 
         LOGGER.config(() -> "Host ip: " + host);
 
-        // TODO is this the best way to create a client?
-        serviceRegistryClient = new ServiceRegistryClient.Builder(applicationName)
-                .host(host)
-                .port(port)
-                .username(username)
-                .password(password)
-                .queueName(queueName)
-                .build();
+        Map<String, String> parameters = new HashMap<>();
+        parameters.put("applicationName", applicationName);
+        parameters.put("host", host);
+        parameters.put("port", port);
+        parameters.put("username", username);
+        parameters.put("password", password);
+        parameters.put("queueName", queueName);
+
+        serviceRegistryConfig.setParameters(parameters);
+
+        // fire service registration event
+        applicationEventPublisher.publishEvent(new ServiceConfigurationEvent(applicationName));
     }
 
     private String readProperty(final String key, Map<String, Object> snoopConfig) {

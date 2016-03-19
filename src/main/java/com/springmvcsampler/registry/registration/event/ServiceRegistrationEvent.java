@@ -1,4 +1,4 @@
-package com.springmvcsampler.registry.registration;
+package com.springmvcsampler.registry.registration.event;
 
 import org.springframework.context.ApplicationEvent;
 

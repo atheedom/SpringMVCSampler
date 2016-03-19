@@ -4,47 +4,82 @@ import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
+import com.springmvcsampler.registry.registration.config.ServiceRegistryRabbitConfig;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Created by atheedom on 19/02/2016.
  */
+@Component
 public class RabbitClient implements MessageClient {
 
     private Channel channel;
     private Connection connection;
     private AMQP.Queue.DeclareOk declareOk;
-    private ServiceRegistryClient client;
+    private ServiceRegistryRabbitConfig config;
+    private boolean started = false;
 
-    public RabbitClient(ServiceRegistryClient client) throws IOException {
-        this.client = client;
-        connect();
+    private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
+
+    @Autowired
+    private ServiceRegistryConfig serviceRegistryConfig;
+
+    public void init() {
+        this.config = (ServiceRegistryRabbitConfig) serviceRegistryConfig;
+    }
+
+
+    @Override
+    public boolean start() {
+
+        try {
+            connect();
+        } catch (Exception e) {
+            return false;
+        }
+        started = true;
+        return true;
     }
 
     private void connect() throws IOException {
         ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost(client.getHost());
-        factory.setUsername(client.getUsername());
-        factory.setPassword(client.getPassword());
-        factory.setPort(client.getPort());
+        factory.setHost(config.getHost());
+        factory.setUsername(config.getUsername());
+        factory.setPassword(config.getPassword());
+        factory.setPort(config.getPort());
         connection = factory.newConnection();
         channel = connection.createChannel();
-        declareOk = channel.queueDeclare(client.getQueueName(), false, false, false, null);
+        declareOk = channel.queueDeclare(config.getQueueName(), false, false, false, null);
+        AMQP.Queue.BindOk bind = channel.queueBind(config.getQueueName(), "bus", "#");
     }
 
-    public void startHeartBeat() {
-        client.getScheduledExecutorService().scheduleWithFixedDelay((Runnable) () -> {
+
+    public void startHeartBeat() throws Exception {
+        checkStarted();
+        scheduledExecutorService.scheduleWithFixedDelay((Runnable) () -> {
             try {
-                channel.basicPublish("", client.getQueueName(), null, MessageHelper.heartBeat().getBytes());
+                System.out.println("Sending heartbeat message");
+                channel.basicPublish("bus", config.getQueueName(), null, MessageHelper.heartBeat().getBytes());
             } catch (IOException e) {
-                // Logout
+                System.out.println("Error sending heartbeat message");
             }
         }, 5, 5, TimeUnit.SECONDS);
     }
 
-    public void deregister() {
+    private void checkStarted() throws Exception {
+        if (!started) {
+            throw new Exception("Service not started");
+        }
+    }
+
+    public void deregister() throws Exception {
+        checkStarted();
 
         // Send message to deregister service
 
@@ -56,7 +91,8 @@ public class RabbitClient implements MessageClient {
         }
     }
 
-    public void endHeartBeat() {
+    public void endHeartBeat() throws Exception {
+        checkStarted();
 
     }
 

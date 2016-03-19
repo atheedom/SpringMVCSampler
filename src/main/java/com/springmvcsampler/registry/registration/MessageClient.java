@@ -5,10 +5,14 @@ package com.springmvcsampler.registry.registration;
  */
 public interface MessageClient {
 
-    void startHeartBeat();
+    void init();
 
-    void deregister();
+    boolean start();
 
-    void endHeartBeat();
+    void startHeartBeat() throws Exception;
+
+    void deregister() throws Exception;
+
+    void endHeartBeat() throws Exception;
 
 }

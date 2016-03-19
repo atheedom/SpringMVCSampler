@@ -1,6 +1,6 @@
 registration:
-  host: 192.168.99.100
-  port: 5692
-  username: guest
-  password: guest
-  queueName: hello
+  host: rabbitmq
+  port: 5672
+  username: remote
+  password: remote
+  queueName: serviceregistry

@@ -1,6 +1,7 @@
-package com.springmvcsampler.registry.registration;
+package com.springmvcsampler.registry.registration.event;
 
 
+import com.springmvcsampler.registry.registration.ServiceHelper;
 import com.springmvcsampler.registry.registration.annotation.ServiceRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
