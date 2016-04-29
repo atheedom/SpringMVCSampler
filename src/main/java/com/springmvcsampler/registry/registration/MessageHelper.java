@@ -6,7 +6,7 @@ package com.springmvcsampler.registry.registration;
 public class MessageHelper {
 
 
-    public static String heartBeat() {
-        return null;
+    public static String heartBeat(HeartBeatPayload heartBeatPayload) {
+        return heartBeatPayload.toString();
     }
 }

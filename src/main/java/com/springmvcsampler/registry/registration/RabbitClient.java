@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.time.Instant;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +26,8 @@ public class RabbitClient implements MessageClient {
     private ServiceRegistryRabbitConfig config;
     private boolean started = false;
 
+    private HeartBeatPayload heartBeatPayload;
+
     private ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 
     @Autowired
@@ -32,6 +35,7 @@ public class RabbitClient implements MessageClient {
 
     public void init() {
         this.config = (ServiceRegistryRabbitConfig) serviceRegistryConfig;
+        this.heartBeatPayload = new HeartBeatPayload(config.getApplicationName());
     }
 
 
@@ -65,9 +69,10 @@ public class RabbitClient implements MessageClient {
         scheduledExecutorService.scheduleWithFixedDelay((Runnable) () -> {
             try {
                 System.out.println("Sending heartbeat message");
-                channel.basicPublish("bus", config.getQueueName(), null, MessageHelper.heartBeat().getBytes());
-            } catch (IOException e) {
-                System.out.println("Error sending heartbeat message");
+                heartBeatPayload.setTimeStamp(Instant.now().toEpochMilli());
+                channel.basicPublish("bus", config.getQueueName(), null, MessageHelper.heartBeat(heartBeatPayload).getBytes());
+            } catch (Exception e) {
+                System.out.println("Error sending heartbeat message " + e);
             }
         }, 5, 5, TimeUnit.SECONDS);
     }
